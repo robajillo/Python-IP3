@@ -1,7 +1,7 @@
 import os
 
 class Config:
-     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://roba:marsabit@localhost/pitches'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://roba:marsabit@localhost/pitches'
     
 
 class ProdConfig(Config):
