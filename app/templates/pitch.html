@@ -1,0 +1,33 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro %}
+
+
+{%block content%}
+
+
+{%for items in pitches%}  
+<div class="card text-center">
+ 
+  <div class="card-header">
+    {{ items.category }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ items.user.username }}</h5>
+    <p class="card-text">
+      {{ items.pitch }}
+      
+    </p>
+    
+  </div>
+  <div class="card-footer text-muted">
+  <span> <a href="#"><i class="fa fa-thumbs-up"></i></a> </span>
+    <a href="{{url_for('main.new_comment', pitch_id =items.id)}}"> <button type="button" class="btn btn-light-blue btn-md">Comment</button></button></a> 
+     <span> <a href="#"> <i class="fa fa-thumbs-down"></i> </a></span>
+  </div>
+
+</div>
+{%endfor%}
+
+            
+{% endblock%}
+

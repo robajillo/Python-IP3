@@ -1,0 +1,47 @@
+{% macro display(pitches) %}
+{% if pitches %}
+{% for category in pitches %}
+<div class="row">
+<div class="col-md-6 mb-4"> 
+
+ 
+<div class="card text-center">
+ 
+  <div class="card-header">
+    Category: {{category.category}}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">  Posted by:
+{{ category.user.username }}</h5>
+    <p class="card-text">
+      {{category.pitch}}
+      
+    </p>
+    
+  </div>
+  <div class="card-footer text-muted">
+  <p class="text-center"> </p>
+    <footer class=" text-center" >
+    <span> <a href="#"><i class="fa fa-thumbs-up"></i></a> </span>
+    {%for items in pitches%}
+    <a href="{{url_for('main.new_comment', pitch_id =items.id)}}"> <button type="button" class="btn btn-light-blue btn-md">Comment</button></button></a> 
+    {%endfor%}
+    <span> <a href="#"> <i class="fa fa-thumbs-down"></i> </a></span>
+    
+  </div>
+</div>
+
+</div>
+</div>
+{%endfor%}
+{% else %}
+				<div class="card">
+					<div class="card-body">
+				
+						<p class="card-title">Category Has 0 posts</p>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+</div>
+{% endmacro %}
