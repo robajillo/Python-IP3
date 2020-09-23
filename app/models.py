@@ -14,10 +14,8 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(255),unique = True,index = True)
     profile_pic_path = db.Column(db.String())
     bio = db.Column(db.String(255))
-    comment = db.relationship('Comment', backref='user', lazy='dynamic')
     password_hash = db.Column(db.String(255))
-    pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
-    
+    pitches = db.relationship('Pitch', backref='users', lazy='dynamic')
 
     @property
     def password(self):
@@ -40,8 +38,6 @@ class Pitch(db.Model):
     title = db.Column(db.String(255))
     pitch = db.Column(db.String)
     category = db.Column(db.String(255))
-    description = db.Column(db.String(255))
-    comments = db.relationship('Comment',backref = 'pitch',lazy="dynamic")
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     
     def save_pitch(self):
@@ -53,37 +49,27 @@ class Pitch(db.Model):
         pitches = Pitch.query.filter_by(category).all()
         return pitches
 
-    # @classmethod
-    # def get_pitch(cls,id):
-    #     pitch = Pitch.query.filter_by(id=id).first()
-
-    #     return pitch
-    # def save_pitch(self):
-    #     db.session.add(self)
-    #     db.session.commit()
-
         
     def __repr__(self):
-        return f'Pitch {self.post}'
+        return f'Pitch {self.pitch}'
 
+        
 class Comment(db.Model):
-    __tablename__ = 'comments'
-
-    id = db.Column(db.Integer,primary_key = True)
-    
-    comment = db.Column(db.String(255))
-    user_id = db.relation(db.Integer,db.ForeignKey('users.id'))
+    __tablename__ = 'comments' 
+    id = db.Column(db.Integer, primary_key = True)
+    comments = db.Column(db.Text())
     pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     
     def save_comment(self):
         db.session.add(self)
         db.session.commit()
-
+        
     @classmethod
     def get_comments(cls,pitch_id):
         comments = Comment.query.filter_by(pitch_id=pitch_id).all()
 
         return comments
-
+        
     def __repr__(self):
-        return f'Comment:{self.comment}'
+        return f'Comment{self.comments}'

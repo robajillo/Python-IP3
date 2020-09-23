@@ -80,9 +80,9 @@ def new_pitch():
 
         pitch = form.pitch.data
         category = form.category.data
-        
-        
-        new_pitch = Pitch(pitch = pitch,category = category,user = current_user)
+        title = form.title.data
+        # import pdb; pdb.set_trace()
+        new_pitch = Pitch(title=title,pitch=pitch,category=category,users=current_user)
         new_pitch.save_pitch()
         
 
@@ -112,8 +112,11 @@ def new_comment(pitch_id):
         comments = comment_form.comment.data
         
         pitch_id = pitch_id
-        new_comment = Comment(comment=comment,pitch_id=pitch_id,user_id=current_user)
+        user_id = current_user._get_current_object().id
+        new_comment = Comment(comments=comments,pitch_id=pitch_id,user_id=user_id)
+        # import pdb; pdb.set_trace()
         new_comment.save_comment()
+        
         return redirect(url_for('main.index',comment_form=comment_form,pitch_id=pitch_id))
 
     return render_template('comment.html',comment_form = comment_form,comment=comment,pitch_id=pitch_id) 
