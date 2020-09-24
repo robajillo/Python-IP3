@@ -5,7 +5,7 @@
 {%block content%}
 
 
-{%for items in pitches%}  
+{% for items in pitches[::-1] %} 
 <div class="card text-center">
  
   <div class="card-header">
